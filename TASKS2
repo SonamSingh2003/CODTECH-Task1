@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GradeTracker {
+    private ArrayList<Double> grades;
+    private Scanner scanner;
+
+    public GradeTracker() {
+        grades = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+
+    public void inputGrades() {
+        System.out.println("Enter grades for the subjects (type -1 to stop):");
+        while (true) {
+            System.out.print("Grade: ");
+            double grade = scanner.nextDouble();
+            if (grade == -1) break;
+            grades.add(grade);
+        }
+    }
+
+    public double calculateAverage() {
+        if (grades.isEmpty()) return 0;
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    public String getLetterGrade(double average) {
+        if (average >= 90) return "A";
+        else if (average >= 80) return "B";
+        else if (average >= 70) return "C";
+        else if (average >= 60) return "D";
+        else return "F";
+    }
+
+    public double calculateGPA(double average) {
+        return average / 20; // Assuming a scale of 0-100 for GPA conversion
+    }
+
+    public void displayResults() {
+        double average = calculateAverage();
+        String letterGrade = getLetterGrade(average);
+        double gpa = calculateGPA(average);
+
+        System.out.println("\n--- Grade Summary ---");
+        System.out.printf("Average Grade: %.2f\n", average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.printf("GPA: %.2f\n", gpa);
+    }
+
+    public static void main(String[] args) {
+        GradeTracker tracker = new GradeTracker();
+        tracker.inputGrades();
+        tracker.displayResults();
+    }
+}
